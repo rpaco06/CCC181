@@ -99,14 +99,32 @@ def staff_dashboard():
     return "Staff dashboard coming soon"
 
 
-@app.route("/queue/<int:ticket_id>")
+@app.get("/queue/<int:ticket_id>")
 def ticket(ticket_id):
     # <int:ticket_id> only matches numbers, so /queue/abc returns 404.
     t = get_ticket(ticket_id)
     if t is None:
         abort(404)
-    return render_template("ticket.html", ticket=t, service=get_service(t["service_id"]))
+    # Count only the people still waiting ahead of this ticket for the same gear.
+    ahead = [x for x in TICKETS
+             if x["service_id"] == t["service_id"]
+             and x["status"] == "waiting"
+             and x["number"] < t["number"]]
+    return render_template("ticket.html", ticket=t, service=get_service(t["service_id"]),
+                           ahead=len(ahead))
 
+
+@app.post("/queue/<int:ticket_id>/leave")
+def leave_queue(ticket_id):
+    t = get_ticket(ticket_id)
+    if t is None:
+        abort(404)
+    if t["status"] != "waiting":
+        flash("This ticket can no longer be cancelled.", "warning")
+        return redirect(url_for("ticket", ticket_id=ticket_id))
+    t["status"] = "no-show"
+    flash(f"You left the queue. Ticket #{ticket_id} was cancelled.", "info")
+    return redirect(url_for("index"))
 
 if __name__ == "__main__":
     # Lets you also start the app with: python app.py

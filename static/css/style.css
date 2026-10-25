@@ -95,3 +95,43 @@ body {
 
 .alert { border-radius: 0; border-width: 2px; }
 footer { color: #444; }
+
+/* My place: the ticket number, status bar and position */
+.vq-box {
+  background: #f1f3f6;
+  border: 2px solid #000;
+  padding: 1rem;
+  text-align: center;
+}
+.vq-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #333;
+}
+.vq-number {
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.vq-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #000;
+  color: #fff;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.vq-position {
+  border: 2px solid #000;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.vq-request dt { font-weight: 600; color: #444; }
+.vq-request dd { font-weight: 700; margin-bottom: 0.5rem; text-align: right; }

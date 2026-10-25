@@ -28,7 +28,7 @@ I reviewed each screen at phone and laptop width against Marco (student waiting)
 
 ## Parts of the wireframes I will not build
 
-The Stitch wireframes include features that are not in my requirements (FR-01 to FR-05), so I am leaving them out of the app: the "TKT-8842" code, "ISSUED AT" time, "REPORT COUNTER", CONNECTED indicator and LEAVE LINE button on My place; the PRIORITY FILTER (PE classes only), the desk station box and the lockers, wait-time and rack-lock boxes on the staff dashboard; and the INVENTORY and HISTORY tabs on the staff phone. An SMS alert was also considered and removed, because it needs phone numbers and an SMS service.
+The Stitch wireframes include features that are not in my requirements (FR-01 to FR-05), so I am leaving them out of the app: the "TKT-8842" code, "ISSUED AT" time, "REPORT COUNTER", CONNECTED indicator on My place; the PRIORITY FILTER (PE classes only), the desk station box and the lockers, wait-time and rack-lock boxes on the staff dashboard; and the INVENTORY and HISTORY tabs on the staff phone. An SMS alert was also considered and removed, because it needs phone numbers and an SMS service.
 
 ## Decision on the wireframes
 
