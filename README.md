@@ -1,7 +1,6 @@
-# ClinicQ: Hello, Flask
+# VarsityQ
 
-Starter Flask app for **CCC181 Week 2: Git, GitHub & Flask Foundations**.
-It shows the project structure, routes, templates and static files from the slides.
+VarsityQ is a queue management system for borrowing sports gear at a school gym. Students join a queue for a gear category (such as basketball or badminton), leave a collateral, and see their place in line, while gym staff call the next borrower, mark gear as issued, or record no-shows. To run it: create a virtual environment with `py -m venv .venv`, activate it with `.venv\Scripts\activate`, install the packages with `pip install -r requirements.txt`, then start it with `flask --app app run --debug` and open http://127.0.0.1:5000.
 
 ## Project structure
 
