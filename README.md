@@ -21,13 +21,18 @@ my-app/
 
 ## Routes
 
-| URL | View function | What you see |
-|---|---|---|
-| `/` | `index()` | "Hello, Ana!" and a list of tickets, rendered with `index.html` |
-| `/queue/<int:ticket_id>` | `ticket()` | A page for that ticket, e.g. `/queue/12` |
-| `/hello` | `hello()` | The plain text "Hello, CCC181!" |
+| URL | Method | View function | What it does |
+|---|---|---|---|
+| `/` | GET | `index()` | Home page with the "Join the queue" button |
+| `/join` | GET | `join_form()` | Shows the empty borrow-gear form |
+| `/join` | POST | `join()` | Checks every field on the server, then creates a ticket |
+| `/queue/<int:ticket_id>` | GET | `ticket()` | My place: ticket number, status and people ahead |
+| `/queue/<int:ticket_id>/leave` | POST | `leave_queue()` | A waiting borrower leaves the queue |
+| `/staff` | GET | `staff_dashboard()` | Staff queue, with a gear category filter |
+| `/staff/call-next` | POST | `staff_call_next()` | Calls the next waiting borrower |
+| `/staff/tickets/<int:ticket_id>/<action>` | POST | `staff_action()` | Marks a called ticket as issued (`serve`) or `no-show` |
 
-Try `/queue/abc`: the `int` converter only accepts numbers, so Flask returns 404.
+Everything that changes data is a POST, so a refresh or a link preview can't serve someone by accident. A ticket number that doesn't exist, such as `/queue/99` or `/queue/abc`, returns 404.
 
 ## 1. Set up the Python environment
 
