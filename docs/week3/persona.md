@@ -2,7 +2,7 @@
 
 ---
 
-## Marco, the PE student and intramural athlete (person waiting)
+## Marco, the PE student and intramural athlete (person waiting)    
 
 > "We wasted 20 minutes of our 1-hour PE class waiting at the desk just to find out all the volleyballs were taken, so we ended up doing basic drills instead." *(interview)*
 
