@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Ticket #{{ ticket.number }} · VarsityQ{% endblock %}
+
+{% block content %}
+  <h2>Ticket #{{ ticket.number }}</h2>
+  <ul>
+    <li>Borrower: {{ ticket.name }} ({{ ticket.student_id }})</li>
+    <li>Gear: {{ service.name }} &ndash; pick up at {{ service.rack }}</li>
+    <li>Collateral: {{ ticket.collateral }}</li>
+    <li>PE class: {{ "Yes" if ticket.pe_class else "No" }}</li>
+    <li>Status: {{ ticket.status }}</li>
+  </ul>
+  <p><a href="{{ url_for('index') }}">&larr; Back to the queue</a></p>
+{% endblock %}
