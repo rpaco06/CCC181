@@ -282,3 +282,14 @@ select:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+
+/* Bootstrap removes the outline on focused fields, so these selectors
+   (same strength, later in the file) put it back for keyboard users. */
+.form-control:focus-visible,
+.form-select:focus-visible,
+.form-check-input:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
