@@ -7,10 +7,15 @@
     <div class="vq-card">
       <h1 class="vq-label mb-3">Your ticket</h1>
 
-      <div class="vq-box mb-3">
-        <div class="vq-label">Your number</div>
-        <div class="vq-number">#{{ ticket.number }}</div>
-        <div class="fw-semibold">{{ service.name }}</div>
+      <div class="vq-stub mb-3">
+        <div class="vq-stub-top">
+          <div class="vq-stub-label">Your number</div>
+          <div class="vq-number">#{{ ticket.number }}</div>
+        </div>
+        <div class="vq-stub-bottom">
+          <span class="vq-stub-gear">{{ service.name }}</span>
+          <span class="vq-barcode" aria-hidden="true"></span>
+        </div>
       </div>
 
       <div id="live-status" aria-live="polite">
