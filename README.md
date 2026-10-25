@@ -5,15 +5,18 @@ VarsityQ is a queue management system for borrowing sports gear at Mindanao Stat
 ## Project structure
 
 ```
-my-app/
-├── app.py              # creates the app and defines routes
+```
+CCC181/
+├── app.py              # routes, validation and the in-memory gear and ticket data
 ├── requirements.txt    # packages to rebuild the environment
 ├── .gitignore          # keeps .venv, caches and secrets out of Git
 ├── .venv/              # your virtual environment (not committed)
 ├── templates/          # Jinja2 HTML files for render_template()
-│   ├── base.html       # shared layout
+│   ├── base.html       # shared layout: navbar, flash messages, footer
 │   ├── index.html      # home page
-│   └── ticket.html     # page for /queue/<ticket_id>
+│   ├── join.html       # borrow-gear form
+│   ├── ticket.html     # My place page for /queue/<ticket_id>
+│   └── staff.html      # staff dashboard
 └── static/             # served at /static/...
     ├── css/style.css
     └── js/main.js
