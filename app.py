@@ -94,9 +94,55 @@ def join():
     return redirect(url_for("ticket", ticket_id=number))
 
 
-@app.route("/staff")
+@app.get("/staff")
 def staff_dashboard():
-    return "Staff dashboard coming soon"
+    service_id = request.args.get("service_id", type=int)
+    queue = [t for t in TICKETS if t["status"] in ("waiting", "called")]
+    if service_id:
+        queue = [t for t in queue if t["service_id"] == service_id]
+    queue.sort(key=lambda t: t["number"])  # order of arrival
+    waiting = sum(1 for t in queue if t["status"] == "waiting")
+    by_id = {s["id"]: s for s in SERVICES}
+    return render_template("staff.html", queue=queue, services=SERVICES,
+                           by_id=by_id, selected=service_id, waiting=waiting)
+
+
+@app.post("/staff/call-next")
+def staff_call_next():
+    # Staff actions change data, so they use POST and never a plain link.
+    service_id = request.form.get("service_id", type=int)
+    waiting = [t for t in TICKETS
+               if t["status"] == "waiting"
+               and (not service_id or t["service_id"] == service_id)]
+    if waiting:
+        nxt = min(waiting, key=lambda t: t["number"])
+        nxt["status"] = "called"
+        flash(f"Ticket #{nxt['number']} ({nxt['name']}) called.", "info")
+    else:
+        flash("No one is waiting.", "warning")
+    return redirect(url_for("staff_dashboard", service_id=service_id))
+
+
+# action -> (status the ticket must have now, new status, words for the message)
+STAFF_ACTIONS = {
+    "serve": ("called", "served", "issued"),
+    "no-show": ("called", "no-show", "no-show"),
+}
+
+
+@app.post("/staff/tickets/<int:ticket_id>/<action>")
+def staff_action(ticket_id, action):
+    t = get_ticket(ticket_id)
+    rule = STAFF_ACTIONS.get(action)
+    if t is None or rule is None:
+        abort(404)
+    required, new_status, words = rule
+    if t["status"] != required:
+        flash(f"Ticket #{ticket_id} must be called first.", "warning")
+    else:
+        t["status"] = new_status
+        flash(f"Ticket #{ticket_id} marked {words}.", "info")
+    return redirect(url_for("staff_dashboard", service_id=request.form.get("service_id", type=int)))
 
 
 @app.get("/queue/<int:ticket_id>")

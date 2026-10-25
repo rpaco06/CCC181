@@ -131,3 +131,8 @@ git push origin main     # when you have commits to share
 - One logical change per commit
 - Commit early and often
 - Good: "Add join-queue form". Unhelpful: "update", "asdf", "final na talaga".
+
+
+   ## Note
+
+   The staff dashboard (`/staff`) is open to anyone for now. Staff login comes in a later week.

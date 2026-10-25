@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Staff · VarsityQ{% endblock %}
+
+{% macro keep_filter() %}
+  {% if selected %}<input type="hidden" name="service_id" value="{{ selected }}">{% endif %}
+{% endmacro %}
+
+{% block content %}
+<h1 class="vq-title">Active borrowers queue</h1>
+<p class="vq-sub">Call the next borrower and mark gear issued.</p>
+<hr class="vq-rule">
+
+<div class="vq-card mb-4">
+  <div class="row g-3 align-items-end">
+    <div class="col-12 col-md">
+      <form method="get" action="{{ url_for('staff_dashboard') }}" class="d-flex gap-2 align-items-end">
+        <div class="flex-grow-1">
+          <label for="service_id" class="form-label">Gear category</label>
+          <select id="service_id" name="service_id" class="form-select">
+            <option value="">All gear</option>
+            {% for s in services %}
+              <option value="{{ s.id }}" {% if selected == s.id %}selected{% endif %}>{{ s.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-outline-dark">Filter</button>
+      </form>
+    </div>
+    <div class="col-12 col-md-auto">
+      <form method="post" action="{{ url_for('staff_call_next') }}">
+        {{ keep_filter() }}
+        <button type="submit" class="btn btn-vq btn-lg w-100">Call next</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% if queue %}
+  <div class="table-responsive vq-card p-0">
+    <table class="table caption-top align-middle mb-0 vq-table">
+      <caption class="px-3 pt-3">Borrowers waiting or called, in order of arrival. {{ waiting }} waiting.</caption>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Student ID</th>
+          <th scope="col">Gear (rack)</th>
+          <th scope="col">Collateral</th>
+          <th scope="col">PE class</th>
+          <th scope="col">Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in queue %}
+          <tr class="{% if t.pe_class %}vq-pe{% endif %}">
+            <th scope="row">{{ t.number }}</th>
+            <td>{{ t.name }}</td>
+            <td class="font-monospace">{{ t.student_id }}</td>
+            <td>{{ by_id[t.service_id].name }}<br><span class="vq-rack">{{ by_id[t.service_id].rack }}</span></td>
+            <td>{{ t.collateral }}</td>
+            <td>
+              {% if t.pe_class %}<span class="badge text-bg-dark">PE class</span>
+              {% else %}<span class="text-body-secondary">No</span>{% endif %}
+            </td>
+            <td>
+              {% if t.status == "called" %}<span class="badge text-bg-success">Called</span>
+              {% else %}<span class="badge text-bg-light border border-dark">Waiting</span>{% endif %}
+            </td>
+            <td>
+              {% if t.status == "called" %}
+                <div class="d-flex gap-2">
+                  <form method="post" action="{{ url_for('staff_action', ticket_id=t.number, action='serve') }}">
+                    {{ keep_filter() }}
+                    <button type="submit" class="btn btn-dark btn-sm"
+                            aria-label="Mark ticket {{ t.number }} as issued">Issued</button>
+                  </form>
+                  <form method="post" action="{{ url_for('staff_action', ticket_id=t.number, action='no-show') }}">
+                    {{ keep_filter() }}
+                    <button type="submit" class="btn btn-outline-dark btn-sm"
+                            aria-label="Mark ticket {{ t.number }} as no-show">No-show</button>
+                  </form>
+                </div>
+              {% else %}
+                <span class="text-body-secondary">Not called yet</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="small mt-2"><span class="badge text-bg-dark">PE class</span> Gray rows are borrowers for an active PE class.</p>
+{% else %}
+  <div class="vq-card text-center py-5">
+    <p class="h5 mb-1">No one is waiting.</p>
+    <p class="mb-0 text-body-secondary">New tickets appear here as soon as students join.</p>
+  </div>
+{% endif %}
+{% endblock %}
