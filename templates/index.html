@@ -1,16 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Gear requests in the queue</h2>
-  <ul class="tickets">
-    {% for t in tickets %}
-      <li>
-        <a href="{{ url_for('ticket', ticket_id=t.number) }}">#{{ t.number }}</a>
-        {{ t.name }} &ndash; {{ get_service(t.service_id).name }}
-        ({{ t.status }}){% if t.pe_class %} &ndash; PE class{% endif %}
-      </li>
-    {% else %}
-      <li>The queue is empty.</li>
-    {% endfor %}
-  </ul>
+  <div class="text-center py-5">
+    <h1 class="display-5 fw-bold">VarsityQ</h1>
+    <p class="lead">Borrow sports gear from the gym without standing in a crowd. Join the queue, then watch your place from your phone.</p>
+    <a class="btn btn-primary btn-lg" href="{{ url_for('join_form') }}">Join the queue</a>
+  </div>
 {% endblock %}

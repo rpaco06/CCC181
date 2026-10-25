@@ -1,12 +1,14 @@
-"""VarsityQ: a queue management system for borrowing sports gear at the school gym.
-
+"""VarsityQ: a queue management system for borrowing sports gear at MSU-IIT.
 Run it with:
     flask --app app run --debug
 then open http://127.0.0.1:5000
 """
-from flask import Flask, render_template, abort
+import re
+
+from flask import Flask, abort, flash, redirect, render_template, request, url_for
 
 app = Flask(__name__)
+app.secret_key = "dev-only-change-me"  # Week 11 moves this into an environment variable
 
 # Gear categories and where each one is stored (FR-03: storage rack locations).
 SERVICES = [
@@ -47,7 +49,54 @@ def get_ticket(number):
 
 @app.route("/")
 def index():
-    return render_template("index.html", tickets=TICKETS, get_service=get_service)
+    return render_template("index.html")
+
+
+# Student ID format: 4 digits, a hyphen, 4 digits (for example 2024-1423).
+STUDENT_ID_PATTERN = re.compile(r"^\d{4}-\d{4}$")
+
+
+@app.get("/join")
+def join_form():
+    return render_template("join.html", services=SERVICES, collaterals=COLLATERALS, form={})
+
+
+@app.post("/join")
+def join():
+    form = request.form
+    name = form.get("name", "").strip()
+    student_id = form.get("student_id", "").strip()
+    service_id = form.get("service_id", type=int)
+    collateral = form.get("collateral", "")
+    pe_class = form.get("pe_class") == "on"
+
+    # Never trust form input: the server checks every field.
+    errors = {}
+    if not name:
+        errors["name"] = "Enter your full name."
+    if not STUDENT_ID_PATTERN.match(student_id):
+        errors["student_id"] = "Enter your student ID as 4 digits, a hyphen, then 4 digits (for example 2024-1423)."
+    if service_id not in [s["id"] for s in SERVICES]:
+        errors["service_id"] = "Choose the gear you want to borrow."
+    if collateral not in COLLATERALS:
+        errors["collateral"] = "Choose the collateral you will leave."
+
+    if errors:
+        flash("Please fix the highlighted fields.", "danger")
+        return render_template("join.html", services=SERVICES, collaterals=COLLATERALS,
+                               form=form, errors=errors), 400
+
+    number = max((t["number"] for t in TICKETS), default=0) + 1
+    TICKETS.append({"number": number, "name": name, "student_id": student_id,
+                    "service_id": service_id, "collateral": collateral,
+                    "pe_class": pe_class, "status": "waiting"})
+    flash(f"You joined the queue. Your ticket is #{number}.", "success")
+    return redirect(url_for("ticket", ticket_id=number))
+
+
+@app.route("/staff")
+def staff_dashboard():
+    return "Staff dashboard coming soon"
 
 
 @app.route("/queue/<int:ticket_id>")
