@@ -2,6 +2,92 @@
 {% block title %}Borrow gear · VarsityQ{% endblock %}
 
 {% block content %}
-  <h1 class="h3">Borrow gear</h1>
-  <p>The join form is coming in Part 5.</p>
+<div class="row justify-content-center">
+  <div class="col-12 col-md-8 col-lg-6">
+    <div class="vq-card">
+      <h1 class="vq-title">Borrow gear</h1>
+      <p class="vq-sub">Pick your gear and get a ticket.</p>
+      <hr class="vq-rule">
+
+      <form method="post" action="{{ url_for('join') }}" novalidate id="join-form">
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <label for="name" class="form-label">Full name</label>
+            <span class="vq-tag">Required</span>
+          </div>
+          <input id="name" name="name" type="text" autocomplete="name" required
+                 placeholder="e.g. Jordan Miller"
+                 class="form-control {% if errors and errors.name %}is-invalid{% endif %}"
+                 value="{{ form.get('name', '') }}"
+                 {% if errors and errors.name %}aria-describedby="name-error"{% endif %}>
+          {% if errors and errors.name %}
+            <div id="name-error" class="invalid-feedback">{{ errors.name }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <label for="student_id" class="form-label">Student ID</label>
+            <span class="vq-tag">Required</span>
+          </div>
+          <input id="student_id" name="student_id" type="text" inputmode="numeric"
+                 autocomplete="off" required maxlength="9" placeholder="YYYY-XXXX"
+                 class="form-control {% if errors and errors.student_id %}is-invalid{% endif %}"
+                 value="{{ form.get('student_id', '') }}"
+                 aria-describedby="student_id-hint{% if errors and errors.student_id %} student_id-error{% endif %}">
+          <div id="student_id-hint" class="form-text">e.g. 2024-1423 (4 digits, hyphen, 4 digits)</div>
+          {% if errors and errors.student_id %}
+            <div id="student_id-error" class="invalid-feedback">{{ errors.student_id }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <label for="service_id" class="form-label">Gear category</label>
+            <span class="vq-tag">Required</span>
+          </div>
+          <select id="service_id" name="service_id" required
+                  class="form-select {% if errors and errors.service_id %}is-invalid{% endif %}"
+                  {% if errors and errors.service_id %}aria-describedby="service_id-error"{% endif %}>
+            <option value="">Choose gear…</option>
+            {% for s in services %}
+              <option value="{{ s.id }}"
+                {% if form.get('service_id') == s.id|string %}selected{% endif %}>{{ s.name }}</option>
+            {% endfor %}
+          </select>
+          {% if errors and errors.service_id %}
+            <div id="service_id-error" class="invalid-feedback">{{ errors.service_id }}</div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          <div class="d-flex justify-content-between align-items-baseline">
+            <label for="collateral" class="form-label">Collateral you will leave</label>
+            <span class="vq-tag">Required</span>
+          </div>
+          <select id="collateral" name="collateral" required
+                  class="form-select {% if errors and errors.collateral %}is-invalid{% endif %}"
+                  {% if errors and errors.collateral %}aria-describedby="collateral-error"{% endif %}>
+            <option value="">Choose collateral…</option>
+            {% for c in collaterals %}
+              <option value="{{ c }}" {% if form.get('collateral') == c %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+          </select>
+          {% if errors and errors.collateral %}
+            <div id="collateral-error" class="invalid-feedback">{{ errors.collateral }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-check d-flex align-items-center mb-4 ps-0">
+          <input class="form-check-input flex-shrink-0 mt-0 ms-0" type="checkbox" id="pe_class" name="pe_class"
+                 {% if form.get('pe_class') %}checked{% endif %}>
+          <label class="form-check-label" for="pe_class">I am borrowing for an active PE class</label>
+        </div>
+
+        <button type="submit" class="btn btn-vq btn-lg w-100">Get my ticket &rarr;</button>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
