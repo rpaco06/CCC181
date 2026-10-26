@@ -22,21 +22,21 @@ Full personas: [personas.md](personas.md)
 
 **Join.** Marco uses it to get a ticket. It covers FR-01 and FR-05.
 
-![Join on a phone](wireframes/join_queue_mobile.png)
+![Join on a phone](screenshots/join_queue_mobile.png)
 
-![Join on a laptop](wireframes/join_queue_desktop.png)
+![Join on a laptop](screenshots/join_queue_desktop.png)
 
 **My place.** Marco uses it to see his number, status and how many people are ahead. It covers FR-02, and it shows the PE class answer from FR-05.
 
-![My place on a phone](wireframes/my_place_mobile.png)
+![My place on a phone](screenshots/my_place_mobile.png)
 
-![My place on a laptop](wireframes/my_place_desktop.png)
+![My place on a laptop](screenshots/my_place_desktop.png)
 
 **Staff dashboard.** Mang Bert uses it to call the next borrower and mark gear issued or no-show. It covers FR-03, FR-04 and FR-05.
 
-![Staff dashboard on a phone](wireframes/staff_dashboard_mobile.png)
+![Staff dashboard on a phone](screenshots/staff_dashboard_mobile.png)
 
-![Staff dashboard on a laptop](wireframes/staff_dashboard_desktop.png)
+![Staff dashboard on a laptop](screenshots/staff_dashboard_desktop.png)
 
 ## 4. Design decisions
 
