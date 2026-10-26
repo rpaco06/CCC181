@@ -39,6 +39,14 @@ def get_service(service_id):
     return None
 
 
+def people_ahead(t):
+    """People still waiting who arrived before this ticket.
+
+    Staff call the next person in order of arrival, so everyone at the counter
+    counts, whatever gear they asked for.
+    """
+    return sum(1 for x in TICKETS if x["status"] == "waiting" and x["number"] < t["number"])
+
 def get_ticket(number):
     """Return the ticket with this number, or None."""
     for t in TICKETS:
@@ -151,13 +159,9 @@ def ticket(ticket_id):
     t = get_ticket(ticket_id)
     if t is None:
         abort(404)
-    # Count only the people still waiting ahead of this ticket for the same gear.
-    ahead = [x for x in TICKETS
-             if x["service_id"] == t["service_id"]
-             and x["status"] == "waiting"
-             and x["number"] < t["number"]]
+    ahead = people_ahead(t)
     return render_template("ticket.html", ticket=t, service=get_service(t["service_id"]),
-                           ahead=len(ahead))
+                           ahead=ahead)
 
 
 @app.get("/queue/<int:ticket_id>/status.json")
@@ -165,10 +169,7 @@ def ticket_status(ticket_id):
     t = get_ticket(ticket_id)
     if t is None:
         abort(404)
-    ahead = sum(1 for x in TICKETS
-                if x["service_id"] == t["service_id"]
-                and x["status"] == "waiting" and x["number"] < t["number"])
-    return {"status": t["status"], "ahead": ahead}
+    return {"status": t["status"], "ahead": people_ahead(t)}
 
 
 @app.post("/queue/<int:ticket_id>/leave")
