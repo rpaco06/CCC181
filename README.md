@@ -5,7 +5,6 @@ VarsityQ is a queue management system for borrowing sports gear at Mindanao Stat
 ## Project structure
 
 ```
-```
 CCC181/
 ├── app.py              # routes, validation and the in-memory gear and ticket data
 ├── requirements.txt    # packages to rebuild the environment

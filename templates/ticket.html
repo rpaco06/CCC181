@@ -53,12 +53,63 @@
       </dl>
 
       {% if ticket.status == "waiting" %}
-        <form method="post" action="{{ url_for('leave_queue', ticket_id=ticket.number) }}"
-              class="mt-3">
+        <form id="leave-form" method="post"
+              action="{{ url_for('leave_queue', ticket_id=ticket.number) }}" class="mt-3">
           <button type="submit" class="btn btn-outline-dark btn-lg w-100">Leave the queue</button>
         </form>
       {% endif %}
+
+      <p class="small text-body-secondary mt-3 mb-0">This page updates by itself. No need to refresh.</p>
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const statusUrl = "{{ url_for('ticket_status', ticket_id=ticket.number) }}";
+  const badge = document.getElementById("status-badge");
+  const aheadText = document.getElementById("ahead-text");
+  const leaveForm = document.getElementById("leave-form");
+
+  // Label and Bootstrap classes for each status (same as the page the server builds).
+  const BADGES = {
+    "waiting": ["Waiting", "badge text-bg-light fs-6"],
+    "called": ["Called", "badge text-bg-success fs-6"],
+    "served": ["Served", "badge text-bg-secondary fs-6"],
+    "no-show": ["No-show", "badge text-bg-danger fs-6"],
+  };
+
+  // The sentence under the status, same wording as the server.
+  function positionText(status, ahead) {
+    if (status === "waiting") {
+      if (ahead === 0) return "You're next!";
+      if (ahead === 1) return "1 person ahead of you";
+      return ahead + " people ahead of you";
+    }
+    if (status === "called") return "It's your turn. Go to the counter.";
+    if (status === "served") return "Your gear was issued. Enjoy your game!";
+    return "This ticket is closed. Join the queue again to borrow gear.";
+  }
+
+  async function refreshStatus() {
+    try {
+      const res = await fetch(statusUrl);
+      if (!res.ok) return;
+      const data = await res.json();
+
+      const [label, classes] = BADGES[data.status];
+      badge.textContent = label;
+      badge.className = classes;
+      aheadText.textContent = positionText(data.status, data.ahead);
+
+      // Only a waiting borrower can leave, and a finished ticket needs no more checks.
+      if (data.status !== "waiting" && leaveForm) leaveForm.remove();
+      if (data.status === "served" || data.status === "no-show") clearInterval(timer);
+    } catch (err) {
+      console.warn("Could not refresh status", err);
+    }
+  }
+  const timer = setInterval(refreshStatus, 10000);
+</script>
 {% endblock %}
