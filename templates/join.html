@@ -31,7 +31,7 @@
             <label for="student_id" class="form-label">Student ID</label>
             <span class="vq-tag">Required</span>
           </div>
-          <input id="student_id" name="student_id" type="text" inputmode="numeric"
+          <input id="student_id" name="student_id" type="text"
                  autocomplete="off" required maxlength="9" placeholder="YYYY-XXXX"
                  class="form-control {% if errors and errors.student_id %}is-invalid{% endif %}"
                  value="{{ form.get('student_id', '') }}"
