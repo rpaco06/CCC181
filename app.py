@@ -3,14 +3,28 @@ Run it with:
     flask --app app run --debug
 then open http://127.0.0.1:5000
 """
+import os
 import re
 
+from dotenv import load_dotenv
 from flask import Flask, abort, flash, redirect, render_template, request, url_for
+from flask_migrate import Migrate
+from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
+
+from models import CollateralType, Service, Ticket, User, db
+
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = "dev-only-change-me"  # Week 11 moves this into an environment variable
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
+app.config["SQLALCHEMY_ECHO"] = os.environ.get("SQLALCHEMY_ECHO") == "1"
 
+db.init_app(app)
+migrate = Migrate(app, db)
 # Gear categories and where each one is stored (FR-03: storage rack locations).
+
 SERVICES = [
     {"id": 1, "name": "Basketball", "rack": "Rack A"},
     {"id": 2, "name": "Volleyball", "rack": "Rack B"},
