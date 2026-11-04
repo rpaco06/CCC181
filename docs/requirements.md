@@ -23,7 +23,7 @@
 | FR-11 | A gym caretaker can add a new sports gear category with its rack location and average issue time. | Must | **Yes** | This week |
 | FR-12 | A gym caretaker can edit an existing sports gear category's name, rack location, average issue time, and active status. | Must | **Yes** | This week |
 | FR-13 | A gym caretaker can delete a sports gear category that has no tickets attached to it. | Must | **Yes** | This week |
-| FR-14 ★ | A gym caretaker can filter the staff queue view by sports gear category. | Should | **Yes** | This week |
+| FR-14 ★ | A gym caretaker can filter the staff queue view by sports gear category. | Should | **Yes** | Built |
 | FR-15 ★ | A gym caretaker can record when issued sports gear is returned and collateral is released. | Should | **Yes** | Later |
 | FR-16 | A gym caretaker can log in with a password before accessing staff pages. | Should | **Yes** | Later |
 | FR-17 | A gym caretaker can view a daily summary of issued gear, no-shows, and early departures per gear category. | Could | **Yes** | Later |
