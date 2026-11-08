@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="vq-hero">
+  <h1 class="vq-hero-title">Borrow gear without the crowd.</h1>
+  <p>Get a ticket for the ball or racket you need, leave your collateral at the counter, and watch your place in line from your phone.</p>
+  <a class="btn btn-vq btn-lg" href="{{ url_for('join_form') }}">Join the queue</a>
+</section>
+
+<section aria-labelledby="how-title">
+  <h2 id="how-title" class="vq-section-title">How it works</h2>
+  <ol class="vq-steps">
+    <li><strong>Get a ticket</strong><span>Pick your gear, say if it is for a PE class, and choose the collateral you will leave.</span></li>
+    <li><strong>Watch your place</strong><span>Your ticket shows how many people are ahead of you and updates by itself.</span></li>
+    <li><strong>Pick up your gear</strong><span>When your status says Called, go to the counter. The staff will check your collateral.</span></li>
+  </ol>
+</section>
+{% endblock %}

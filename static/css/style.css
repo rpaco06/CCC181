@@ -1,0 +1,295 @@
+/* VarsityQ visual theme: court navy, basketball orange, locker-room gray.
+   Bootstrap handles the layout; this file sets the look. */
+
+:root {
+  --navy: #0f2747;
+  --navy-soft: #1c3a63;
+  --orange: #f26b1d;
+  --orange-dark: #d85a10;
+  --tint: #fde8d8;
+  --surface: #eef3f8;
+  --ink: #14233a;
+  --muted: #47566d;
+  --line: #c3cfdd;
+  --field: #62758f;
+  --green: #167a4a;
+  --red: #b3261e;
+  --slate: #56637a;
+  --focus: #0057d9;
+  --font-display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+h1, h2, h3 { font-family: var(--font-display); }
+
+/* ---------- Top bar ---------- */
+.navbar {
+  background: var(--navy);
+  border-bottom: 4px solid var(--orange);
+}
+.navbar-brand { display: flex; align-items: center; gap: 0.6rem; padding: 0.25rem 0; }
+.vq-wordmark {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: #fff;
+  line-height: 1;
+}
+.vq-wordmark span { color: var(--orange); }
+.navbar .nav-link {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  color: #dbe5f1;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+}
+.navbar .nav-link:hover { color: #fff; }
+.navbar .nav-link.active { color: #fff; border-bottom-color: var(--orange); }
+.navbar-toggler {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+}
+
+/* ---------- Headings ---------- */
+.vq-title {
+  font-size: 2.6rem;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.05;
+  color: var(--navy);
+  margin: 0 0 0.35rem;
+}
+.vq-sub { margin: 0 0 1rem; color: var(--muted); }
+.vq-rule { border: 0; border-top: 5px solid var(--orange); width: 3.5rem; opacity: 1; margin: 0 0 1.5rem; }
+.vq-label { font-size: 0.95rem; font-weight: 700; color: var(--muted); }
+
+/* ---------- Home ---------- */
+.vq-hero {
+  background-color: var(--navy);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='380' viewBox='0 0 640 380' fill='none' stroke='%23ffffff' stroke-opacity='.11' stroke-width='3'%3E%3Ccircle cx='520' cy='190' r='78'/%3E%3Ccircle cx='520' cy='190' r='5' fill='%23ffffff' stroke='none'/%3E%3Cpath d='M520 0V380M300 24H640M300 356H640M300 24V356'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: cover;
+  color: #fff;
+  border-radius: 14px;
+  padding: 2.5rem 1.5rem;
+}
+@media (min-width: 768px) { .vq-hero { padding: 3.5rem 3rem; } }
+.vq-hero-title {
+  font-size: clamp(2.8rem, 9vw, 4.6rem);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 0.98;
+  margin: 0 0 1rem;
+  max-width: 11ch;
+}
+.vq-hero p { max-width: 34rem; color: #dbe5f1; font-size: 1.1rem; }
+
+.vq-steps { list-style: none; counter-reset: step; padding: 0; margin: 2rem 0 0; display: grid; gap: 1.5rem; }
+@media (min-width: 768px) { .vq-steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+.vq-steps li { counter-increment: step; border-top: 3px solid var(--navy); padding-top: 0.75rem; }
+.vq-steps li::before {
+  content: counter(step);
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1;
+  color: var(--orange-dark);
+}
+.vq-steps strong { display: block; font-size: 1.1rem; margin: 0.25rem 0; }
+.vq-steps span { color: var(--muted); }
+.vq-section-title { font-size: 1.6rem; font-weight: 700; color: var(--navy); margin-top: 2.5rem; }
+
+/* ---------- Cards and form ---------- */
+.vq-card {
+  --pad: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: var(--pad);
+  box-shadow: 0 1px 0 var(--line);
+}
+@media (min-width: 576px) { .vq-card { --pad: 2rem; } }
+
+.form-label { font-weight: 700; margin-bottom: 0.3rem; }
+.vq-tag { font-size: 0.85rem; color: var(--muted); }
+.form-text { color: var(--muted); }
+.form-control, .form-select {
+  min-height: 3rem;
+  border: 1.5px solid var(--field);
+  border-radius: 8px;
+  background-color: #fff;
+}
+.form-control:focus, .form-select:focus { border-color: var(--navy); box-shadow: none; }
+.form-check-input {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0;
+  border: 1.5px solid var(--field);
+  border-radius: 6px;
+}
+.form-check-input:checked { background-color: var(--navy); border-color: var(--navy); }
+.form-check-label { margin-left: 0.5rem; }
+.form-check { min-height: 2.75rem; }
+
+/* ---------- Buttons ---------- */
+.btn { min-height: 2.75rem; border-radius: 999px; font-weight: 700; }
+.btn-vq {
+  background: var(--orange);
+  color: var(--navy);
+  border: 2px solid var(--orange);
+  padding: 0.75rem 1.5rem;
+}
+.btn-vq:hover, .btn-vq:focus { background: var(--orange-dark); border-color: var(--orange-dark); color: #fff; }
+.btn-vq:active { background: var(--orange-dark); }
+.btn-dark { --bs-btn-bg: var(--navy); --bs-btn-border-color: var(--navy);
+  --bs-btn-hover-bg: #0a1b33; --bs-btn-hover-border-color: #0a1b33;
+  --bs-btn-active-bg: #0a1b33; --bs-btn-active-border-color: #0a1b33; }
+.btn-outline-dark { --bs-btn-color: var(--navy); --bs-btn-border-color: var(--navy);
+  --bs-btn-hover-bg: var(--navy); --bs-btn-hover-border-color: var(--navy);
+  --bs-btn-active-bg: var(--navy); --bs-btn-active-border-color: var(--navy); }
+
+/* ---------- Status badges (always show the status in words) ---------- */
+.badge { font-weight: 700; border-radius: 999px; padding: 0.45em 0.8em; }
+.badge.text-bg-light { background-color: var(--tint) !important; color: var(--navy) !important; border: 1px solid var(--orange) !important; }
+.badge.text-bg-success { background-color: var(--green) !important; color: #fff !important; }
+.badge.text-bg-secondary { background-color: var(--slate) !important; color: #fff !important; }
+.badge.text-bg-danger { background-color: var(--red) !important; color: #fff !important; }
+.badge.text-bg-dark { background-color: var(--navy) !important; color: #fff !important; }
+
+/* ---------- My place: the ticket stub ---------- */
+.vq-stub {
+  background: var(--navy);
+  color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.vq-stub-top { padding: 1.25rem 1.5rem 0.5rem; }
+.vq-stub-label { color: #dbe5f1; font-weight: 600; }
+.vq-number {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 24vw, 7rem);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1;
+  color: #fff;
+}
+.vq-stub-bottom {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 3px dashed rgba(255, 255, 255, 0.45);
+  padding: 0.9rem 1.5rem;
+}
+.vq-stub-bottom::before,
+.vq-stub-bottom::after {
+  content: "";
+  position: absolute;
+  top: -0.95rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #fff;
+}
+.vq-stub-bottom::before { left: -0.75rem; }
+.vq-stub-bottom::after { right: -0.75rem; }
+.vq-stub-gear { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--orange); }
+.vq-barcode {
+  flex: 0 0 5.5rem;
+  height: 1.6rem;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.85) 0 2px, transparent 2px 4px, rgba(255,255,255,.85) 4px 5px, transparent 5px 8px, rgba(255,255,255,.85) 8px 11px, transparent 11px 13px);
+  opacity: 0.8;
+}
+
+.vq-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  font-weight: 700;
+}
+.vq-position {
+  border-left: 6px solid var(--orange);
+  background: #fff;
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.25rem;
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--navy);
+}
+.vq-request dt { font-weight: 600; color: var(--muted); }
+.vq-request dd { font-weight: 700; margin-bottom: 0.5rem; text-align: right; }
+
+/* ---------- Staff dashboard ---------- */
+.vq-table { min-width: 48rem; }
+.vq-table caption { color: var(--muted); font-weight: 600; }
+.vq-table thead th { background: var(--navy); color: #fff; font-weight: 600; white-space: nowrap; }
+.vq-table tbody th { font-family: var(--font-display); font-size: 1.4rem; }
+.vq-pe { --bs-table-bg: var(--tint); }
+.vq-pe > :first-child { border-left: 6px solid var(--orange); }
+.vq-rack { font-size: 0.85rem; color: var(--muted); }
+
+/* ---------- Alerts and footer ---------- */
+.alert { border-radius: 8px; }
+.vq-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding: 1rem 0; text-align: center; }
+
+/* ---------- Accessibility ---------- */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+.form-check-input:focus-visible,
+.table-responsive:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+.navbar a:focus-visible,
+.navbar button:focus-visible { outline-color: #ffb37a; }
+.vq-hero a:focus-visible { outline-color: #ffb37a; }
+.visually-hidden-focusable:focus {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  background: var(--orange);
+  color: var(--navy);
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+
+/* Bootstrap removes the outline on focused fields, so these selectors
+   (same strength, later in the file) put it back for keyboard users. */
+.form-control:focus-visible,
+.form-select:focus-visible,
+.form-check-input:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
