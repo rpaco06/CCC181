@@ -8,7 +8,7 @@
 - **Student ID:** 2024-1423
 - **Section:** BSCS-CS3B
 - **Date:** October 26, 2026
-- **Pull request:** (#1)
+- **Pull request:** [#2](https://github.com/rpaco06/CCC181/pull/2)
 
 ## 2. Personas
 
